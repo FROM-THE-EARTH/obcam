@@ -9,6 +9,10 @@ sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
 apt-get update
 apt-get install -y python3-rpi.gpio
 
+# Install `distutils`.
+# This module is required when `pip` is installed.
+apt-get install -y python3-distutils
+
 # Install `pip`` if absent.
 if !(type "pip" > /dev/null 2>&1); then
     echo "No command named pip."
