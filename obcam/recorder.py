@@ -80,7 +80,7 @@ class IORecorder:
     @property
     def in_flight(self) -> bool:
         """If the body is in flight or not."""
-        return (gpio.input(self._pin_flight) == 0)
+        return (gpio.input(self._pin_flight) == 1)
 
     def blink_led(self) -> None:
         self._pwm_led.ChangeDutyCycle(50)
@@ -115,13 +115,13 @@ class IORecorder:
         # Wait until the flight pin is to be connected.
         self._logger.debug("Waiting a flight pin to be connected...")
         self.blink_led()
-        gpio.wait_for_edge(self._pin_flight, gpio.RISING)
+        gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
         self.turn_off_led()
         self._logger.debug("A flight pin was connected.")
 
         # Wait until the level of the flight pin becomes low.
         self._logger.debug("Wating the flight pin to be disconnected...")
-        gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
+        gpio.wait_for_edge(self._pin_flight, gpio.RISING)
         self.turn_on_led()
         self._logger.debug("The flight pin was disconnected.")
 
