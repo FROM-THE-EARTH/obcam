@@ -1,6 +1,6 @@
 # obcam
 
-## Installing
+## Install
 
 ```bash
 python -m pip install git+https://github.com/FROM-THE-EARTH/obcam.git
@@ -10,7 +10,7 @@ python -m pip install git+https://github.com/FROM-THE-EARTH/obcam.git
 
 - `pip`
 
-## Setup as a flight camera
+## Install and Activate the flight camera mode
 
 ```bash
 git clone https://github.com/FROM-THE-EARTH/obcam.git
@@ -25,6 +25,38 @@ sudo ./install.sh
 
 - `git`
 
+**Note**
+
+This operation requires network connection.
+
+## Scripts
+
+Scripts in the `scripts` directory may be useful if you want some small operations like installing just `obcam`, activate the flight camera mode, or deactivate the flight camera mode.
+
+**`activate_camera.sh`**
+
+This script activates the Raspberry Pi Camera of a module. Note that the Raspberry Pi Camera is not activated right after the first booting.
+
+**`activate_flightcam.sh`**
+
+This script activates the flight camera mode of the `obcam`. In the flight camera mode, the program of the `obcam` run automatically when booting.
+
+**`deactivate_flightcam.sh`**
+
+This script deactivates the flight camera mode.
+
+**`install_obcam.sh`**
+
+This script installs the `obcam` module using `pip`. Note that `pip` should be installed before executing this script.
+
+**`install_pip.sh`**
+
+This script installs `pip`. Note that `pip` could be not installed yet right after the first booting. Thus, this script might be useful in the situation.
+
+**`uninstall_obcam.sh`**
+
+This script uninstalls the `obcam` module using `pip`.
+
 ## Documentation
 
-See [the site](https://from-the-earth.github.io/obcam/) for detail.
+See [the site](https://from-the-earth.github.io/obcam/) for details.
