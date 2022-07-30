@@ -29,6 +29,9 @@ def verify_video_format(path: str) -> bool:
     return ext[1:] in _VIDEO_FORMATS
 
 
+RISING_TIME_THRESHOLD = 0.5     # seconds
+
+
 class IORecorder:
 
     def __init__(
@@ -115,7 +118,24 @@ class IORecorder:
         # Wait until the flight pin is to be connected.
         self._logger.debug("Waiting a flight pin to be connected...")
         self.blink_led()
-        gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
+
+            # Noise measures
+        time_init = time.time()
+        is_flightpin_connected = False
+        while True:
+            gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
+
+            while True:
+                if self.in_flight:
+                    break
+                else:
+                    if time.time() - time_init > RISING_TIME_THRESHOLD:
+                        is_flightpin_connected = True
+                        break
+
+            if is_flightpin_connected:
+                break
+
         self.turn_off_led()
         self._logger.debug("A flight pin was connected.")
 
