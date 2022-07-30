@@ -1,0 +1,4 @@
+.venv/
+*.h264
+*.log
+__pycache__/
