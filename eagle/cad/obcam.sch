@@ -8511,8 +8511,8 @@ Source: AVX .. aphvc.pdf</description>
 <device name="" package="TO252">
 <connects>
 <connect gate="G$1" pin="P$1" pad="P$1"/>
-<connect gate="G$1" pin="P$2" pad="P$2"/>
-<connect gate="G$1" pin="P$3" pad="P$3"/>
+<connect gate="G$1" pin="P$2" pad="P$3"/>
+<connect gate="G$1" pin="P$3" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8551,7 +8551,6 @@ Source: AVX .. aphvc.pdf</description>
 <part name="B1" library="2022_nse" deviceset="9V_BATTERY_HOLDER" device=""/>
 <part name="IC1" library="2022_nse" deviceset="NJM2391" device=""/>
 <part name="D1" library="2022_nse" deviceset="SML-E1X" device=""/>
-<part name="IC2" library="2022_nse" deviceset="TJ8S06M3L" device=""/>
 <part name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="M2012" package3d_urn="urn:adsk.eagle:package:23561/2" value="1k"/>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="M2012" package3d_urn="urn:adsk.eagle:package:23561/2" value="10k"/>
 <part name="GND7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -8560,6 +8559,7 @@ Source: AVX .. aphvc.pdf</description>
 <part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="M2012" package3d_urn="urn:adsk.eagle:package:23561/2" value="1M"/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="IC2" library="2022_nse" deviceset="TJ8S06M3L" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8617,7 +8617,6 @@ Source: AVX .. aphvc.pdf</description>
 </instance>
 <instance part="IC1" gate="G$1" x="66.04" y="30.48" smashed="yes"/>
 <instance part="D1" gate="G$1" x="127" y="60.96" smashed="yes"/>
-<instance part="IC2" gate="G$1" x="30.48" y="91.44" smashed="yes" rot="R270"/>
 <instance part="R5" gate="G$1" x="139.7" y="60.96" smashed="yes">
 <attribute name="NAME" x="135.89" y="62.4586" size="1.778" layer="95"/>
 <attribute name="VALUE" x="135.89" y="57.658" size="1.778" layer="96"/>
@@ -8646,6 +8645,7 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="GND10" gate="1" x="40.64" y="116.84" smashed="yes" rot="R180">
 <attribute name="VALUE" x="43.18" y="119.38" size="1.778" layer="96" rot="R180"/>
 </instance>
+<instance part="IC2" gate="G$1" x="30.48" y="91.44" smashed="yes" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -8762,10 +8762,10 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="FLIGHT_PIN" gate="G$1" pin="1"/>
 <wire x1="2.54" y1="88.9" x2="20.32" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="88.9" x2="27.94" y2="88.9" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="G$1" pin="P$1"/>
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="20.32" y1="86.36" x2="20.32" y2="88.9" width="0.1524" layer="91"/>
 <junction x="20.32" y="88.9"/>
+<pinref part="IC2" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="FLIGHT_IO" class="0">
@@ -8775,9 +8775,9 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="U$1" gate="G$1" pin="GPIO22/GEN3"/>
 <wire x1="40.64" y1="81.28" x2="53.34" y2="81.28" width="0.1524" layer="91"/>
 <junction x="40.64" y="81.28"/>
-<pinref part="IC2" gate="G$1" pin="P$3"/>
 <wire x1="33.02" y1="86.36" x2="33.02" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="81.28" x2="40.64" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="G$1" pin="P$3"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -8800,7 +8800,6 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="3V3@1" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="P$2"/>
 <pinref part="U$1" gate="G$1" pin="3V3@1"/>
 <wire x1="33.02" y1="96.52" x2="33.02" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="99.06" x2="40.64" y2="99.06" width="0.1524" layer="91"/>
@@ -8808,6 +8807,7 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="40.64" y1="99.06" x2="53.34" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="99.06" x2="40.64" y2="101.6" width="0.1524" layer="91"/>
 <junction x="40.64" y="99.06"/>
+<pinref part="IC2" gate="G$1" pin="P$2"/>
 </segment>
 </net>
 </nets>
