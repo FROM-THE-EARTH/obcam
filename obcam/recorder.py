@@ -120,10 +120,10 @@ class IORecorder:
         self.blink_led()
 
             # Noise measures
-        time_init = time.time()
         is_flightpin_connected = False
         while True:
             gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
+            time_init = time.time()
 
             while True:
                 if self.in_flight:
