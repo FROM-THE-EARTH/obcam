@@ -13,7 +13,7 @@ The figure below is a board of the flight camera module. The module has some fea
 
 ### Raspberry Pi Zero
 
-The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pins and some interfaces, e.g. HDMI, USB and Raspberry Pi Camera. Is is recommended to connect to a monitor and keyboard when you setup a Raspberry Pi.
+The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pins and some interfaces, e.g. HDMI, USB and Raspberry Pi Camera. It is recommended to connect to a monitor and keyboard when you setup a Raspberry Pi.
 
 ![raspi-zero](./res/raspi-zero.png)
 
@@ -25,7 +25,7 @@ The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pi
 1. Prepare a Raspberry Pi Camera and flexible cable for Raspberry Pi Zero. Note that the cable for Raspberry Pi Zero is not same as one of Type A or B.
    ![camera](./res/camera.png)
 
-2. Raspberry Pi Zero has a camera socket and its stopper. Put the stopper down to insert the cable.<br>
+2. Raspberry Pi Zero has a camera socket and its stopper (black part of the bottom). Put the stopper down to insert the cable.<br>
    ![camera-stopper](./res/camera-stopper.png)
 
 3. Insert the cable into the socket and put the stopper in to fix the cable.
