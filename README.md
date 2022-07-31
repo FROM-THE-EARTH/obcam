@@ -1,5 +1,7 @@
 # obcam
 
+`obcam` is the flight camera module and program for the OB team rocket in NSE 2022. See [the site](https://FROM-THE-EARTH.github.io/obcam/) for details.
+
 ## Install
 
 ```bash
@@ -31,7 +33,7 @@ This operation requires network connection.
 
 ## Scripts
 
-Scripts in the `scripts` directory may be useful if you want some small operations like installing just `obcam`, activate the flight camera mode, or deactivate the flight camera mode.
+Scripts in the `scripts` directory may be useful if you want some small operations like installing just `obcam`, activate the flight camera mode, or deactivate the flight camera mode. See [the site](https://FROM-THE-EARTH.github.io/obcam/scripts/) for more information.
 
 **`activate_camera.sh`**
 
@@ -56,7 +58,3 @@ This script installs `pip`. Note that `pip` could be not installed yet right aft
 **`uninstall_obcam.sh`**
 
 This script uninstalls the `obcam` module using `pip`.
-
-## Documentation
-
-See [the site](https://from-the-earth.github.io/obcam/) for details.
