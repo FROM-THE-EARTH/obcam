@@ -71,6 +71,7 @@ class IORecorder:
         self._pin_flight = pin_flight
         self._pin_led = pin_led
         self._fname = file_mov
+        self._format = os.path.splitext(file_mov)[1][1:]
         self._thread: t.Optional[threading.Thread] = None
 
         gpio.setmode(gpio.BCM)
@@ -108,6 +109,7 @@ class IORecorder:
         Notes:
             `timeout` must be positive.
         """
+        file = open(self._fname, "wb")
         if timeout <= 0:
             self._logger.error(
                 "Argument `timeout` must be positive, while {} were given.",
@@ -147,14 +149,16 @@ class IORecorder:
 
         # Start recording
         self._logger.debug("Start recording.")
-        self._camera.start_recording(self._fname)
+        self._camera.start_recording(file, format=self._format)
         time_init = time.time()
         try:
             while True:
                 if 0 < timeout <= (time.time() - time_init):
                     break
                 self._camera.wait_recording(timeout=interval)
+                file.flush()
         finally:
+            file.flush()
             self._camera.stop_recording()
             self._logger.debug("Stop recording.")
 
