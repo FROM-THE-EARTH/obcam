@@ -30,6 +30,7 @@ def verify_video_format(path: str) -> bool:
 
 
 RISING_TIME_THRESHOLD = 0.5     # seconds
+LOG_PLACEHOLDER = "[%(asctime)s] [%(levelname)s] %(message)s"
 
 
 class IORecorder:
@@ -68,6 +69,7 @@ class IORecorder:
         self._logger.setLevel(logging.DEBUG)
         handler = logging.FileHandler(file_log)
         handler.setLevel(logging.DEBUG)
+        handler.setFormatter(logging.Formatter(LOG_PLACEHOLDER))
         self._logger.addHandler(handler)
 
         self._pin_flight = pin_flight
