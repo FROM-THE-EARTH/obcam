@@ -33,10 +33,16 @@ class OBCamGileum(gileum.BaseGileum):
     file_log: t.Optional[str] = None
     """Path to new log file."""
 
-    resolution: t.Tuple[int, int] = (640, 480)
+    parent_dir: t.Optional[str] = None
+    """Path to the parent directory of output files."""
+
+    resolution: t.Tuple[int, int] = (1920, 1080)
     """Resolution of the video to be recorded."""
 
-    interval: float = 1.
+    framerate: int = 30
+    """Framerate of the video to be recorded."""
+
+    interval: float = 0.1
     """Wating time for recording."""
 
     led_blink_freq: float = 2.
