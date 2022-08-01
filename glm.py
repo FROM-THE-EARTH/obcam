@@ -24,7 +24,7 @@ glm = OBCamGileum(
     framerate=30,
 
     # Wating time for recording.
-    interval=1.,
+    interval=0.1,
 
     # Frequency of LED blinking.
     led_blink_freq=2.,
