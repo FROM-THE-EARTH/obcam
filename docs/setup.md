@@ -22,7 +22,7 @@
 
 ## Brief setup for the flight camera mode
 
-Using this method, you can install `obcam` and activate the flight camera mode simultaneously. The brief setup gets unser way using the script `install.sh` [in the repository](https://github.com/FROM-THE-EARTH/obcam/blob/main/install.sh).
+Using this method, you can install `obcam` and activate the flight camera mode simultaneously. The brief setup gets under way using the script `install.sh` [in the repository](https://github.com/FROM-THE-EARTH/obcam/blob/main/install.sh).
 
 First you should download the repository using `git clone`:
 
