@@ -1,3 +1,4 @@
+import logging
 import os
 from os.path import (
     isdir,
@@ -12,6 +13,9 @@ from .recorder import IORecorder
 from .util import get_timestamp
 
 
+LOG_PLACEHOLDER = "[%(asctime)s] [%(levelname)s] %(message)s"
+
+
 @click.command()
 @click.argument(
     "glm_file",
@@ -21,6 +25,7 @@ def main(glm_file: str) -> None:
     gileum.load_glms_at(glm_file)
     glm = gileum.get_glm(OBCamGileum)
 
+    # Setup file paths.
     if glm.file_mov is None:
         glm.file_mov = get_timestamp("mov", "h264")
     if glm.file_log is None:
@@ -33,16 +38,33 @@ def main(glm_file: str) -> None:
         glm.file_mov = join(glm.parent_dir, glm.file_mov)
         glm.file_log = join(glm.parent_dir, glm.file_log)
 
-    with IORecorder(
-        glm.pin_flight,
-        glm.pin_led,
-        file_mov=glm.file_mov,
-        file_log=glm.file_log,
-        resolution=glm.resolution,
-        framerate=glm.framerate,
-        led_blink_freq=glm.led_blink_freq,
-    ) as rec:
-        rec.start_record(
-            glm.timeout,
-            interval=glm.interval,
-        )
+    # Setup the logger.
+    handler = logging.FileHandler(glm.file_log)
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(logging.Formatter(LOG_PLACEHOLDER))
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+
+    logger.debug(
+        "Start the Flight camera mode. "
+        f"Setting; {', '.join([f'{k}: {v}' for k, v in glm.dict().items()])}"
+    )
+
+    try:
+        with IORecorder(
+            glm.pin_flight,
+            glm.pin_led,
+            logger,
+            file_mov=glm.file_mov,
+            resolution=glm.resolution,
+            framerate=glm.framerate,
+            led_blink_freq=glm.led_blink_freq,
+        ) as rec:
+            rec.start_record(
+                glm.timeout,
+                interval=glm.interval,
+            )
+    except Exception as e:
+        logger.exception("Finish with an exception.", exc_info=e)
+        raise e

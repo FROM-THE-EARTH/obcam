@@ -53,3 +53,26 @@ The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pi
 ### Flowchart
 
 ![flowchart](./res/flowchart.svg)
+
+## Outputs
+
+The flight camera application outputs two kinds of files, one is a movie file and the other is a log file.
+
+### Movie Files
+
+Movie files are the main outputs of the application. You can specify path to a movie file before activating the flight camera mode, by writing the path to `glm.py`. See [Setting](./setting.md#filemov) for details.
+
+### Log Files
+
+Log files are useful to analysis state of the application, especially during debug. You can also specify path to a log file before activating the flight camera mode. See [Setting](./setting.md#filelog) for more information.
+
+Below is an example of the log output.
+
+```log
+[2022-08-01 17:43:46,239] [DEBUG] Start the Flight camera mode. Setting; glm_name: main, timeout: 210.0, pin_flight: 22, pin_led: 12, file_mov: mov-220801-174346.h264, file_log: mov-220801-174346.log, parent_dir: None, resolution: (1920, 1080), framerate: 30, interval: 0.1, led_blink_freq: 2.0
+[2022-08-01 17:43:46,415] [DEBUG] Waiting a flight pin to be connected...
+[2022-08-01 17:43:50,004] [DEBUG] A flight pin was connected.
+[2022-08-01 17:43:50,005] [DEBUG] Wating the flight pin to be disconnected...
+[2022-08-01 17:43:58,528] [DEBUG] The flight pin was disconnected.
+[2022-08-01 17:43:58,528] [DEBUG] Start recording.
+```
