@@ -30,7 +30,6 @@ def verify_video_format(path: str) -> bool:
 
 
 RISING_TIME_THRESHOLD = 0.5     # seconds
-LOG_PLACEHOLDER = "[%(asctime)s] [%(levelname)s] %(message)s"
 
 
 class IORecorder:
@@ -39,7 +38,7 @@ class IORecorder:
         self,
         pin_flight: int,
         pin_led: int,
-        file_log: t.Optional[str] = None,
+        logger: logging.Logger,
         file_mov: t.Optional[str] = None,
         resolution: t.Tuple = (1920, 1080),
         framerate: int = 30,
@@ -49,6 +48,7 @@ class IORecorder:
         Args:
             pin_flight: Pin number for a flight pin.
             pin_led: Pin number for a status LED.
+            logger: Logger for the flight camera.
             file_mov: Path to new video file.
             resolution: Resolution of the video.
             led_blink_freq: Frequency of LED blinking.
@@ -58,19 +58,11 @@ class IORecorder:
         elif not verify_video_format(file_mov):
             raise ValueError(f"'{file_mov}' has an invalid extension.")
 
-        if file_log is None:
-            file_log = get_timestamp("mov", "log")
-
+        self._logger = logger
         self._camera = picamera.PiCamera(
             resolution=resolution,
             framerate=framerate,
         )
-        self._logger = logging.getLogger()
-        self._logger.setLevel(logging.DEBUG)
-        handler = logging.FileHandler(file_log)
-        handler.setLevel(logging.DEBUG)
-        handler.setFormatter(logging.Formatter(LOG_PLACEHOLDER))
-        self._logger.addHandler(handler)
 
         self._pin_flight = pin_flight
         self._pin_led = pin_led
