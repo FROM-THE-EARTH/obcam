@@ -15,13 +15,19 @@ glm = OBCamGileum(
     file_mov=None,
 
     # Path to new log file.
-    flie_log=None,
+    file_log=None,
+
+    # Path to the parent directory of output files.
+    parent_dir=None,
 
     # Resolution of the video to be recorded.
-    resolution=(640, 480),
+    resolution=(1920, 1080),
+
+    # Framerate of the video to be recorded.
+    framerate=30,
 
     # Wating time for recording.
-    interval=1.,
+    interval=0.1,
 
     # Frequency of LED blinking.
     led_blink_freq=2.,
