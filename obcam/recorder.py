@@ -54,7 +54,7 @@ class IORecorder:
         """
         if file_mov is None:
             file_mov = get_timestamp("mov", "h264")
-        elif verify_video_format(file_mov):
+        elif not verify_video_format(file_mov):
             raise ValueError(f"'{file_mov}' has an invalid extension.")
 
         if file_log is None:
