@@ -28,6 +28,10 @@ Path to new video file, defaults `None`.
 
 Path to new log file, defualts `None`.
 
+### `parent_dir`
+
+Path to the parent directory of output files, defaults `None`. If a specfied directory doesn't exist, the program automatically create the repository.
+
 ### `resolution`
 
 Resolution of the video to be recorded, defaults `(1920, 1080)`. You cannot make the value greater than the default value, because `(1920, 1080)` is about maximum value.
@@ -60,6 +64,9 @@ glm = OBCamGileum(
 
     # Change path to the log file.
     flie_log="test.log",
+
+    # Set the parent directory of the output files.
+    parent_dir="/obcam-out"
 
     # Make the frequency smaller.
     led_blink_freq=1.,

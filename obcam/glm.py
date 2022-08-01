@@ -33,6 +33,9 @@ class OBCamGileum(gileum.BaseGileum):
     file_log: t.Optional[str] = None
     """Path to new log file."""
 
+    parent_dir: t.Optional[str] = None
+    """Path to the parent directory of output files."""
+
     resolution: t.Tuple[int, int] = (1920, 1080)
     """Resolution of the video to be recorded."""
 

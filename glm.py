@@ -17,6 +17,9 @@ glm = OBCamGileum(
     # Path to new log file.
     file_log=None,
 
+    # Path to the parent directory of output files.
+    parent_dir=None,
+
     # Resolution of the video to be recorded.
     resolution=(1920, 1080),
 
