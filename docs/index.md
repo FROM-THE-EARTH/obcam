@@ -1,5 +1,7 @@
 # obcam
 
+![board](./res/board-top.png)
+
 `obcam` is the flight camera module and program for the OB team rocket in NSE 2022. See [the site](https://FROM-THE-EARTH.github.io/obcam/) for details.
 
 ## Install
