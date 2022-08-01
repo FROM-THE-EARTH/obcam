@@ -15,7 +15,7 @@ glm = OBCamGileum(
     file_mov=None,
 
     # Path to new log file.
-    flie_log=None,
+    file_log=None,
 
     # Resolution of the video to be recorded.
     resolution=(1920, 1080),
