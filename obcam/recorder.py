@@ -40,7 +40,7 @@ class IORecorder:
         pin_led: int,
         file_log: t.Optional[str] = None,
         file_mov: t.Optional[str] = None,
-        resolution: t.Tuple = (640, 480),
+        resolution: t.Tuple = (1920, 1080),
         framerate: int = 30,
         led_blink_freq: float = 2.,
     ) -> None:

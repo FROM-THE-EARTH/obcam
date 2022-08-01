@@ -18,7 +18,7 @@ glm = OBCamGileum(
     flie_log=None,
 
     # Resolution of the video to be recorded.
-    resolution=(640, 480),
+    resolution=(1920, 1080),
 
     # Framerate of the video to be recorded.
     framerate=30,

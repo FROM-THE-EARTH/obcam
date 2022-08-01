@@ -33,7 +33,7 @@ class OBCamGileum(gileum.BaseGileum):
     file_log: t.Optional[str] = None
     """Path to new log file."""
 
-    resolution: t.Tuple[int, int] = (640, 480)
+    resolution: t.Tuple[int, int] = (1920, 1080)
     """Resolution of the video to be recorded."""
 
     framerate: int = 30
