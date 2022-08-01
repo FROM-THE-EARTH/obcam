@@ -30,11 +30,15 @@ Path to new log file, defualts `None`.
 
 ### `resolution`
 
-Resolution of the video to be recorded, defaults `(640, 480)`.
+Resolution of the video to be recorded, defaults `(1920, 1080)`.
+
+### `framerate`
+
+Framerate of the video to be recorded, defaults `30`.
 
 ### `interval`
 
-Wating time for recording, `1.`.
+Wating time for recording, `0.1`.
 
 ### `led_blink_freq`
 
