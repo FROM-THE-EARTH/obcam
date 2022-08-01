@@ -41,6 +41,7 @@ class IORecorder:
         file_log: t.Optional[str] = None,
         file_mov: t.Optional[str] = None,
         resolution: t.Tuple = (640, 480),
+        framerate: int = 30,
         led_blink_freq: float = 2.,
     ) -> None:
         """
@@ -59,9 +60,10 @@ class IORecorder:
         if file_log is None:
             file_log = get_timestamp("mov", "log")
 
-        self._camera = picamera.PiCamera()
-        self._camera.resolution = resolution
-
+        self._camera = picamera.PiCamera(
+            resolution=resolution,
+            framerate=framerate,
+        )
         self._logger = logging.getLogger()
         self._logger.setLevel(logging.DEBUG)
         handler = logging.FileHandler(file_log)
@@ -98,7 +100,7 @@ class IORecorder:
     def record(
         self,
         timeout: float,
-        interval: float = 1.,
+        interval: float = 0.1,
     ) -> None:
         """Record a video while obseving state of the body.
 

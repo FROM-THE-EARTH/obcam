@@ -20,6 +20,7 @@ def main(glm_file: str) -> None:
         file_mov=glm.file_mov,
         file_log=glm.file_log,
         resolution=glm.resolution,
+        framerate=glm.framerate,
         led_blink_freq=glm.led_blink_freq,
     ) as rec:
         rec.start_record(

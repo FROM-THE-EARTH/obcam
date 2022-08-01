@@ -20,6 +20,9 @@ glm = OBCamGileum(
     # Resolution of the video to be recorded.
     resolution=(640, 480),
 
+    # Framerate of the video to be recorded.
+    framerate=30,
+
     # Wating time for recording.
     interval=1.,
 

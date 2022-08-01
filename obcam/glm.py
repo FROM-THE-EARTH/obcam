@@ -36,7 +36,10 @@ class OBCamGileum(gileum.BaseGileum):
     resolution: t.Tuple[int, int] = (640, 480)
     """Resolution of the video to be recorded."""
 
-    interval: float = 1.
+    framerate: int = 30
+    """Framerate of the video to be recorded."""
+
+    interval: float = 0.1
     """Wating time for recording."""
 
     led_blink_freq: float = 2.
