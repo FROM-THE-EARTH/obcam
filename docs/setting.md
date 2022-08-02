@@ -49,11 +49,19 @@ Wating time for recording, `0.1`.
 
 Frequency of LED blinking, defaults `2.`.
 
+### `log_level`
+
+Log level used in the application, defaults `logging.INFO` (`20`).
+
+### `check_waiting_time`
+
+If making log outputs during waiting time for disconnection of the flight pin or not, defaults `False`.
+
 ## Examples
 
 ```python
+import logging
 from obcam import OBCamGileum
-
 
 glm = OBCamGileum(
     # Make the timeout shorter for tests.
@@ -70,6 +78,12 @@ glm = OBCamGileum(
 
     # Make the frequency smaller.
     led_blink_freq=1.,
+
+    # Make verbose log outputs for tests.
+    log_level=logging.DEBUG,
+
+    # Observe waiting time until the flight pin is disconnected.
+    check_waiting_time=True,
 
     # Use the default settings.
     # To use defualt values, you don't have to give corresponding arguments.

@@ -69,10 +69,11 @@ Log files are useful to analysis state of the application, especially during deb
 Below is an example of the log output.
 
 ```log
-[2022-08-01 17:43:46,239] [DEBUG] Start the Flight camera mode. Setting; glm_name: main, timeout: 210.0, pin_flight: 22, pin_led: 12, file_mov: mov-220801-174346.h264, file_log: mov-220801-174346.log, parent_dir: None, resolution: (1920, 1080), framerate: 30, interval: 0.1, led_blink_freq: 2.0
-[2022-08-01 17:43:46,415] [DEBUG] Waiting a flight pin to be connected...
-[2022-08-01 17:43:50,004] [DEBUG] A flight pin was connected.
-[2022-08-01 17:43:50,005] [DEBUG] Wating the flight pin to be disconnected...
-[2022-08-01 17:43:58,528] [DEBUG] The flight pin was disconnected.
-[2022-08-01 17:43:58,528] [DEBUG] Start recording.
+[2022-08-02 03:59:53,126] [INFO] Start the Flight camera mode. Setting; glm_name: main, timeout: 210.0, pin_flight: 22, pin_led: 12, file_mov: mov-220802-035953.h264, file_log: mov-220802-035953.log, parent_dir: None, resolution: (1920, 1080), framerate: 30, interval: 0.1, led_blink_freq: 2.0, log_level: 20, check_waiting_time: False
+[2022-08-02 03:59:53,218] [INFO] Waiting a flight pin to be connected...
+[2022-08-02 04:00:01,074] [INFO] Detected that the flight pin was connected.
+[2022-08-02 04:00:01,075] [INFO] Wating the flight pin to be disconnected...
+[2022-08-02 04:00:03,034] [INFO] Detected that the flight pin was disconnected.
+[2022-08-02 04:00:03,034] [INFO] Start recording.
+[2022-08-02 04:03:33,151] [INFO] Stop recording.
 ```
