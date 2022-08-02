@@ -9,7 +9,10 @@ import click
 import gileum
 
 from .glm import OBCamGileum
-from .recorder import IORecorder
+from .recorder import (
+    Command,
+    IORecorder,
+)
 from .util import (
     get_timestamp,
     shutdown_now,
@@ -57,12 +60,21 @@ def run_flight_camera(glm: OBCamGileum) -> None:
                 file_mov = join(glm.parent_dir, file_mov)
 
             # Start recording.
-            if not recorder.record(
+            command = recorder.record(
                 glm.timeout,
                 file_mov=file_mov,
-                interval=glm.interval,
+                interval_recording=glm.interval_recording,
                 check_waiting_time=glm.check_waiting_time,
-            ):
+                interval_waiting_time=glm.interval_waiting_time,
+                interval_watching=glm.interval_watching,
+                threshold_restart=glm.threshold_restart,
+                threshold_exit=glm.threshold_exit,
+            )
+            if command is Command.EXIT:
+                break
+            if command is Command.RESTART:
+                continue
+            else:
                 break
     except Exception as e:
         logger.exception("Finish with an exception.", exc_info=e)

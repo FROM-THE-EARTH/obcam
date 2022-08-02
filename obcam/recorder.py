@@ -1,4 +1,5 @@
 from __future__ import annotations
+import enum
 import logging
 import os
 import time
@@ -29,7 +30,20 @@ def verify_video_format(path: str) -> bool:
     return ext[1:] in _VIDEO_FORMATS
 
 
-FALLING_TIME_THRESHOLD = 0.5     # seconds
+class Command(enum.Enum):
+    """Command list of the application."""
+
+    RESTART = enum.auto()
+    """Command to restart recording."""
+
+    EXIT = enum.auto()
+    """Command to stop recording and exit immediately before shutting down."""
+
+    NULL = enum.auto()
+    """Represents no commands activated."""
+
+
+GRACE_PERIOD_FOR_CHATTERING = 0.3     # seconds
 
 
 class IORecorder:
@@ -65,8 +79,11 @@ class IORecorder:
         self._lock_in_recording = threading.RLock()
         self._in_recording = False
 
-        self._lock_should_restart = threading.RLock()
-        self._should_restart = False
+        self._lock_command = threading.RLock()
+        self._command = Command.NULL
+
+        self._lock_flightpin_onoff = threading.RLock()
+        self._flightpin_onoff: t.List[t.List[bool, float]] = []
 
         gpio.setmode(gpio.BCM)
         gpio.setup(self._pin_flight, gpio.IN, pull_up_down=gpio.PUD_DOWN)
@@ -112,68 +129,102 @@ class IORecorder:
             )
             time.sleep(interval)
 
-    def _command_restart(
-        self,
-        time_threshold: float = 3.,
-        interval: float = 0.1,
-    ) -> None:
-        interval_mili = int(interval * 1e3)     # miliseconds
-        time_init: t.Optional[float] = None
+    def _watch_flightpin(self, interval: float = 0.1) -> None:
+        time_init = None
+        last_level = None
         while True:
-            self._lock_in_recording.acquire()
-            if not self._in_recording:
-                return
-            self._lock_in_recording.release()
+            with self._lock_in_recording:
+                if not self._in_recording:
+                    return
 
-            if time_init is None:
-                channel = gpio.wait_for_edge(
-                    self._pin_flight,
-                    gpio.FALLING,
-                    timeout=interval_mili,
-                )
-                if channel is not None:
+            level = self.in_flight
+            with self._lock_flightpin_onoff:
+                if last_level is None or level != last_level:
                     time_init = time.time()
-                continue
+                    self._flightpin_onoff.append([level, 0.])
+                else:
+                    self._flightpin_onoff[-1][1] = time.time() - time_init
+
+            last_level = level
+            time.sleep(interval)
+
+    def _watch_commands(
+        self,
+        interval: float = 0.1,
+        threshold_restart: float = 5.,
+        threshold_exit: float = 2.,
+    ) -> None:
+        while True:
+            with self._lock_in_recording:
+                if not self._in_recording:
+                    return
+
+            with self._lock_flightpin_onoff:
+                for i, (level, time_) in enumerate(self._flightpin_onoff):
+                    if level:
+                        continue
+
+                    if time_ >= threshold_restart:
+                        with self._lock_command:
+                            self._command = Command.RESTART
+                            return
+                    elif GRACE_PERIOD_FOR_CHATTERING < time_ <= threshold_exit:
+                        try:
+                            if self._flightpin_onoff[i + 1][1] < threshold_exit:
+                                continue
+
+                            with self._lock_command:
+                                self._command = Command.EXIT
+                                return
+                        except IndexError:
+                            pass
 
             time.sleep(interval)
-            if self.in_flight:
-                time_init = None
-                continue
-
-            if time.time() - time_init > time_threshold:
-                break
-
-        self._lock_should_restart.acquire()
-        self._should_restart = True
-        self._lock_should_restart.release()
-        self._logger.info(
-            "Activated the command `restart`. The application will be "
-            "restarted."
-        )
 
     def record(
         self,
         timeout: float,
         file_mov: t.Optional[str] = None,
-        interval: float = 0.1,
+        interval_recording: float = 0.1,
         check_waiting_time: bool = False,
-    ) -> bool:
+        interval_waiting_time: float = 0.1,
+        interval_watching: float = 0.1,
+        threshold_restart: float = 5.,
+        threshold_exit: float = 2.,
+    ) -> Command:
         """Record a video while obseving state of the body.
 
         Args:
             timeout: Length of recording time.
             file_mov: Path to new video file.
-            interval: Wating time for recording.
+            interval_recording: Interval of recording.
             check_waiting_time: If making log outputs during waiting time for
                 disconnection of the flight pin or not.
+            interval_waiting_time: Interval of waiting time until the flight
+                pin is disconnected. This parameter doesn't valid when the
+                parameter `check_waiting_time` is `False`.
+            interval_watching: Interval of watching processes in other
+                threads.
+            threshold_restart: Time threshold of waiting time to activate
+                the command `restart`. The command `restart` is activated
+                if the flight pin is connected again for more than
+                `threshold_restart` seconds during recording.
+            threshold_exit: Time threshold of waiting time to activate
+                the command `exit`. The command `exit` is activated
+                if the flight pin is connected for less than `threshold_exit`
+                seconds and disconnected again for more than `threshold_exit`
+                seconds during recording.
 
         Returns:
-            If the application should restart recording or not.
+            Command that should be executed in the application after
+            recording.
 
         Notes:
             `timeout` must be positive.
         """
-        self._should_restart = False
+        self._command = Command.NULL
+        self._flightpin_onoff = []
+
         if file_mov is None:
             file_mov = get_timestamp("mov", "h264")
         elif not verify_video_format(file_mov):
@@ -201,7 +252,7 @@ class IORecorder:
             gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
             self._logger.debug(
                 "Falling edge of the flight pin level was detected. "
-                f"Waiting {FALLING_TIME_THRESHOLD} seconds to verify "
+                f"Waiting {GRACE_PERIOD_FOR_CHATTERING} seconds to verify "
                 "the flight pin was pulled out exactly."
             )
 
@@ -216,7 +267,7 @@ class IORecorder:
                     )
                     break
                 else:
-                    if time.time() - time_init > FALLING_TIME_THRESHOLD:
+                    if time.time() - time_init > GRACE_PERIOD_FOR_CHATTERING:
                         is_flightpin_connected = True
                         self._logger.debug(
                             "Time of waiting threshold elapsed while level of "
@@ -233,10 +284,16 @@ class IORecorder:
         # Wait until the level of the flight pin becomes low.
         self._logger.info("Wating the flight pin to be disconnected...")
         if check_waiting_time:
-            th = threading.Thread(target=self._log_waiting_time)
-            th.start()
-            # This thread automatically exits after the flight pin
-            # is disconnected.
+            th_check_waiting_time = threading.Thread(
+                target=self._log_waiting_time,
+                kwargs={"interval": interval_waiting_time},
+            )
+            th_check_waiting_time.start()
+            self._logger.debug(
+                "Thread for checking waiting time for disconnection "
+                "of the flight pin started. This thread is to be "
+                "terminated right after the flight pin is disconnected."
+            )
 
         gpio.wait_for_edge(self._pin_flight, gpio.RISING)
         self._lock_in_recording.acquire()
@@ -249,8 +306,23 @@ class IORecorder:
         self._logger.info("Detected that the flight pin was disconnected.")
         self.turn_on_led()
 
-        th_restart = threading.Thread(target=self._command_restart)
-        th_restart.start()
+        th_watch_flightpin = threading.Thread(
+            target=self._watch_flightpin,
+            kwargs={"interval": interval_watching},
+        )
+        th_watch_flightpin.start()
+        self._logger.debug("Thread for watching the flight pin started.")
+
+        th_watch_commands = threading.Thread(
+            target=self._watch_commands,
+            kwargs={
+                "interval": interval_watching,
+                "threshold_restart": threshold_restart,
+                "threshold_exit": threshold_exit,
+            },
+        )
+        th_watch_commands.start()
+        self._logger.debug("Thread for watching commands started.")
 
         # Recording
         if self._first_recording:
@@ -270,13 +342,15 @@ class IORecorder:
                     self._logger.debug("Timeout is over.")
                     break
 
-                self._lock_should_restart.acquire()
-                if self._should_restart:
-                    self._lock_should_restart.release()
-                    break
-                self._lock_should_restart.release()
+                with self._lock_command:
+                    if self._command is not Command.NULL:
+                        self._logger.info(
+                            f"Detected a command, {self._command}. "
+                            "Exit the recording loop."
+                        )
+                        break
 
-                self._camera.wait_recording(timeout=interval)
+                self._camera.wait_recording(timeout=interval_recording)
                 file.flush()
                 self._logger.debug(
                     "Recording in progress while writing into the file, "
@@ -296,6 +370,17 @@ class IORecorder:
             self._lock_in_recording.acquire()
             self._in_recording = False
             self._lock_in_recording.release()
-            th_restart.join()
+            th_watch_commands.join()
+            self._logger.debug("The thread for watching commands terminated.")
+            th_watch_flightpin.join()
+            self._logger.debug(
+                "The thread for watching the flight pin terminated."
+            )
+            if check_waiting_time:
+                th_check_waiting_time.join()
+                self._logger.debug(
+                    "Confirmed the thread for checking waiting time "
+                    "was terminated successfully."
+                )
 
-        return self._should_restart
+        return self._command
