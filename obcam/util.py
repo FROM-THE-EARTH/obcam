@@ -1,4 +1,5 @@
 import datetime
+import subprocess
 import typing as t
 
 
@@ -12,3 +13,7 @@ def get_timestamp(
     if suffix is not None and len(suffix):
         timestamp = ".".join((timestamp, suffix))
     return timestamp
+
+
+def shutdown_now() -> None:
+    subprocess.run(["shutdown", "-h", "now"])

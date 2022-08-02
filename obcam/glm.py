@@ -43,7 +43,7 @@ class OBCamGileum(gileum.BaseGileum):
     framerate: int = 30
     """Framerate of the video to be recorded."""
 
-    interval: float = 0.1
+    interval_recording: float = 0.1
     """Wating time for recording."""
 
     led_blink_freq: float = 2.
@@ -55,3 +55,25 @@ class OBCamGileum(gileum.BaseGileum):
     check_waiting_time: bool = False
     """If making log outputs during waiting time for disconnection
     of the flight pin or not."""
+
+    interval_waiting_time: float = 0.1
+    """Interval of waiting time until the flight pin is disconnected. This
+    parameter doesn't valid when the parameter `check_waiting_time` is
+    `False`."""
+
+    shutdown_after_recording: bool = True
+    """If shutting down the system after recording or not."""
+
+    interval_watching: float = 0.1
+    """Interval of watching processes in other threads."""
+
+    threshold_restart: float = 5.
+    """Time threshold of waiting time to activate the command `restart`. The
+    command `restart` is activated if the flight pin is connected again for
+    more than `threshold_restart` seconds during recording."""
+
+    threshold_exit: float = 2.
+    """Time threshold of waiting time to activate the command `exit`. The
+    command `exit` is activated if the flight pin is connected for less than
+    `threshold_exit` seconds and disconnected again for more than
+    `threshold_exit` seconds during recording."""
