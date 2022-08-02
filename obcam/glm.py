@@ -1,3 +1,4 @@
+import logging
 import typing as t
 
 import gileum
@@ -47,3 +48,10 @@ class OBCamGileum(gileum.BaseGileum):
 
     led_blink_freq: float = 2.
     """Frequency of LED blinking."""
+
+    log_level: int = logging.INFO
+    """Log level used in the application."""
+
+    check_waiting_time: bool = False
+    """If making log outputs during waiting time for disconnection
+    of the flight pin or not."""
