@@ -246,17 +246,17 @@ class IORecorder:
         self._logger.info("Waiting a flight pin to be connected...")
         self.blink_led()
 
-            # Noise measures
-        is_flightpin_connected = False
         while True:
-            gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
+            if self.in_flight:
+                continue
+
             self._logger.debug(
-                "Falling edge of the flight pin level was detected. "
+                "Disconnection of the flight pin was detected. "
                 f"Waiting {GRACE_PERIOD_FOR_CHATTERING} seconds to verify "
                 "the flight pin was pulled out exactly."
             )
-
             time_init = time.time()
+            is_flightpin_connected = False
             while True:
                 if self.in_flight:
                     self._logger.debug(
@@ -266,14 +266,14 @@ class IORecorder:
                         "the flight pin is to be continued."
                     )
                     break
-                else:
-                    if time.time() - time_init > GRACE_PERIOD_FOR_CHATTERING:
-                        is_flightpin_connected = True
-                        self._logger.debug(
-                            "Time of waiting threshold elapsed while level of "
-                            "the flight pin is stable."
-                        )
-                        break
+
+                if time.time() - time_init > GRACE_PERIOD_FOR_CHATTERING:
+                    is_flightpin_connected = True
+                    self._logger.debug(
+                        "Time of waiting threshold elapsed while level of "
+                        "the flight pin is stable."
+                    )
+                    break
 
             if is_flightpin_connected:
                 break
