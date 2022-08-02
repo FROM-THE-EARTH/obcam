@@ -40,4 +40,7 @@ glm = OBCamGileum(
     # If making log outputs during waiting time for disconnection
     # of the flight pin or not
     check_waiting_time=False,
+
+    # If shutting down the system after recording or not.
+    shutdown_after_recording=True,
 )

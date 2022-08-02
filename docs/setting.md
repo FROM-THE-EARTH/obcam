@@ -57,6 +57,10 @@ Log level used in the application, defaults `logging.INFO` (`20`).
 
 If making log outputs during waiting time for disconnection of the flight pin or not, defaults `False`.
 
+### `shutdown_after_recording`
+
+If shutting down the system after recording or not.
+
 ## Examples
 
 ```python
@@ -92,5 +96,6 @@ glm = OBCamGileum(
     resolution=(1920, 1080),
     framerate=30,
     interval=0.1,
+    shutdown_after_recording=True,
 )
 ```

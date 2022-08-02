@@ -55,3 +55,6 @@ class OBCamGileum(gileum.BaseGileum):
     check_waiting_time: bool = False
     """If making log outputs during waiting time for disconnection
     of the flight pin or not."""
+
+    shutdown_after_recording: bool = True
+    """If shutting down the system after recording or not."""
