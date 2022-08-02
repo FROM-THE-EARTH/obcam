@@ -1,3 +1,5 @@
+import logging
+
 from obcam import OBCamGileum
 
 
@@ -31,4 +33,11 @@ glm = OBCamGileum(
 
     # Frequency of LED blinking.
     led_blink_freq=2.,
+
+    # Log level used in the application.
+    log_level=logging.INFO,
+
+    # If making log outputs during waiting time for disconnection
+    # of the flight pin or not
+    check_waiting_time=False,
 )

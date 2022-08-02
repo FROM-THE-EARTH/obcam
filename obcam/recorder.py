@@ -29,7 +29,7 @@ def verify_video_format(path: str) -> bool:
     return ext[1:] in _VIDEO_FORMATS
 
 
-RISING_TIME_THRESHOLD = 0.5     # seconds
+FALLING_TIME_THRESHOLD = 0.5     # seconds
 
 
 class IORecorder:
@@ -70,6 +70,9 @@ class IORecorder:
         self._format = os.path.splitext(file_mov)[1][1:]
         self._thread: t.Optional[threading.Thread] = None
 
+        self._lock_in_flight = threading.RLock()
+        self._in_flight = False
+
         gpio.setmode(gpio.BCM)
         gpio.setup(self._pin_flight, gpio.IN, pull_up_down=gpio.PUD_DOWN)
         gpio.setup(self._pin_led, gpio.OUT)
@@ -84,23 +87,43 @@ class IORecorder:
 
     def blink_led(self) -> None:
         self._pwm_led.ChangeDutyCycle(50)
+        self._logger.debug("LED started to be blinking.")
 
     def turn_on_led(self) -> None:
         self._pwm_led.ChangeDutyCycle(100)
+        self._logger.debug("Turned the LED on.")
 
     def turn_off_led(self) -> None:
         self._pwm_led.ChangeDutyCycle(0)
+        self._logger.debug("Turned the LED off.")
+
+    def _log_waiting_time(self, interval: float = 1.) -> None:
+        time_init = time.time()
+        while True:
+            self._lock_in_flight.acquire()
+            if self._in_flight:
+                break
+            self._lock_in_flight.release()
+
+            self._logger.debug(
+                "Waiting the flight pin to be disconnected, "
+                f"{round(time.time() - time_init, 3)} elapsing."
+            )
+            time.sleep(interval)
 
     def record(
         self,
         timeout: float,
         interval: float = 0.1,
+        check_waiting_time: bool = False,
     ) -> None:
         """Record a video while obseving state of the body.
 
         Args:
             timeout: Length of recording time.
             interval: Wating time for recording.
+            check_waiting_time: If making log outputs during waiting time for
+                disconnection of the flight pin or not.
 
         Notes:
             `timeout` must be positive.
@@ -114,49 +137,83 @@ class IORecorder:
             raise ValueError("timeout must be positive.")
 
         # Wait until the flight pin is to be connected.
-        self._logger.debug("Waiting a flight pin to be connected...")
+        self._logger.info("Waiting a flight pin to be connected...")
         self.blink_led()
 
             # Noise measures
         is_flightpin_connected = False
         while True:
             gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
-            time_init = time.time()
+            self._logger.debug(
+                "Falling edge of the flight pin level was detected. "
+                f"Waiting {FALLING_TIME_THRESHOLD} seconds to verify "
+                "the flight pin was pulled out exactly."
+            )
 
+            time_init = time.time()
             while True:
                 if self.in_flight:
+                    self._logger.debug(
+                        "Level of the flight pin is high. It means that "
+                        "the flight pin is disconnected before time of "
+                        "waiting threshold elapsed. Thus, detecting "
+                        "the flight pin is to be continued."
+                    )
                     break
                 else:
-                    if time.time() - time_init > RISING_TIME_THRESHOLD:
+                    if time.time() - time_init > FALLING_TIME_THRESHOLD:
                         is_flightpin_connected = True
+                        self._logger.debug(
+                            "Time of waiting threshold elapsed while level of "
+                            "the flight pin is stable."
+                        )
                         break
 
             if is_flightpin_connected:
                 break
 
         self.turn_off_led()
-        self._logger.debug("A flight pin was connected.")
+        self._logger.info("Detected that the flight pin was connected.")
 
         # Wait until the level of the flight pin becomes low.
-        self._logger.debug("Wating the flight pin to be disconnected...")
-        gpio.wait_for_edge(self._pin_flight, gpio.RISING)
-        self.turn_on_led()
-        self._logger.debug("The flight pin was disconnected.")
+        self._logger.info("Wating the flight pin to be disconnected...")
+        if check_waiting_time:
+            th = threading.Thread(target=self._log_waiting_time)
+            th.start()
+            # This thread automatically exits after the flight pin
+            # is disconnected.
 
-        # Start recording
-        self._logger.debug("Start recording.")
+        gpio.wait_for_edge(self._pin_flight, gpio.RISING)
+        self._lock_in_flight.acquire()
+        self._in_flight = True
+        self._lock_in_flight.release()
+
+        self._logger.debug(
+            "Rising edge of the flight pin level was detected."
+        )
+        self._logger.info("Detected that the flight pin was disconnected.")
+        self.turn_on_led()
+
+        # Recording
+        self._logger.info("Start recording.")
         self._camera.start_recording(file, format=self._format)
         time_init = time.time()
         try:
             while True:
-                if 0 < timeout <= (time.time() - time_init):
+                elapsed_time = time.time() - time_init
+                if 0 < timeout <= elapsed_time:
                     break
                 self._camera.wait_recording(timeout=interval)
                 file.flush()
+                self._logger.debug(
+                    "Recording in progress while writing into the file, "
+                    f"remaining {round(timeout - elapsed_time, 3)} seconds..."
+                )
+            self._logger.debug("Timeout is over.")
         finally:
             file.flush()
             self._camera.stop_recording()
-            self._logger.debug("Stop recording.")
+            self._logger.info("Stop recording.")
 
             self.turn_off_led()
 
@@ -164,10 +221,11 @@ class IORecorder:
         self,
         timeout: float,
         interval: float = 1.,
+        check_waiting_time: bool = False,
     ) -> IORecorder:
         self._thread = threading.Thread(
             target=self.record,
-            args=(timeout, interval),
+            args=(timeout, interval, check_waiting_time),
         )
         self._thread.start()
         return self
