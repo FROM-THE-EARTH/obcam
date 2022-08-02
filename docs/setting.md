@@ -41,7 +41,7 @@ Resolution of the video to be recorded, defaults `(1920, 1080)`. You cannot make
 
 Framerate of the video to be recorded, defaults `30`. You cannot make the value greater than the default value, because `30` fps is about maximum value.
 
-### `interval`
+### `interval_recording`
 
 Wating time for recording, `0.1`.
 
@@ -56,6 +56,26 @@ Log level used in the application, defaults `logging.INFO` (`20`).
 ### `check_waiting_time`
 
 If making log outputs during waiting time for disconnection of the flight pin or not, defaults `False`.
+
+### `interval_waiting_time`
+
+Interval of waiting time until the flight pin is disconnected, defaults `0.1`. This parameter doesn't valid when the parameter `check_waiting_time` is `False`.
+
+### `shutdown_after_recording`
+
+If shutting down the system after recording or not.
+
+### `interval_watching`1
+
+Interval of watching processes in other threads, defualts `0.1`.
+
+### `threshold_restart`
+
+Time threshold of waiting time to activate the command `restart`, defaults `5.`. The command `restart` is activated if the flight pin is connected again for more than `threshold_restart` seconds during recording."""
+
+### `threshold_exit`
+
+Time threshold of waiting time to activate the command `exit`, defaults `2.`. The command `exit` is activated if the flight pin is connected for less than `threshold_exit` seconds and disconnected again for more than `threshold_exit` seconds during recording."""
 
 ## Examples
 
@@ -91,6 +111,11 @@ glm = OBCamGileum(
     pin_led=12,
     resolution=(1920, 1080),
     framerate=30,
-    interval=0.1,
+    interval_recording=0.1,
+    interval_waiting_time=0.1,
+    shutdown_after_recording=True,
+    interval_watching=0.1,
+    threshold_restart=5.,
+    threshold_exit=2.,
 )
 ```
