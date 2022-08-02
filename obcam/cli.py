@@ -43,24 +43,26 @@ def run_flight_camera(glm: OBCamGileum) -> None:
         f"Setting; {', '.join([f'{k}: {v}' for k, v in glm.dict().items()])}"
     )
 
+    recorder = IORecorder(
+        glm.pin_flight,
+        glm.pin_led,
+        logger,
+        file_mov=glm.file_mov,
+        resolution=glm.resolution,
+        framerate=glm.framerate,
+        led_blink_freq=glm.led_blink_freq,
+    )
     try:
-        with IORecorder(
-            glm.pin_flight,
-            glm.pin_led,
-            logger,
-            file_mov=glm.file_mov,
-            resolution=glm.resolution,
-            framerate=glm.framerate,
-            led_blink_freq=glm.led_blink_freq,
-        ) as rec:
-            rec.start_record(
-                glm.timeout,
-                interval=glm.interval,
-                check_waiting_time=glm.check_waiting_time,
-            )
+        recorder.record(
+            glm.timeout,
+            interval=glm.interval,
+            check_waiting_time=glm.check_waiting_time,
+        )
     except Exception as e:
         logger.exception("Finish with an exception.", exc_info=e)
         raise e
+    finally:
+        recorder.cleanup()
 
 
 @click.command()
