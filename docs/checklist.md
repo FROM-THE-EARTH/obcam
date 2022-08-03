@@ -16,7 +16,7 @@
     ```
 - [ ] Clone the `obcam` repository:
     ```bash
-    git clone https://github.com/FROM-THE-EARTH/
+    git clone https://github.com/FROM-THE-EARTH/obcam.git
     cd obcam
     ```
 - [ ] Confirm `glm.py` in the repository and change the content if necessary.
