@@ -80,7 +80,7 @@ def run_flight_camera(glm: OBCamGileum) -> None:
         logger.exception("Finish with an exception.", exc_info=e)
         raise e
     else:
-        if glm.shutdown_after_recording:
+        if glm.shutdown_after_recording and command is Command.NULL:
             logger.info("Shut down the system.")
             shutdown_now()
 
