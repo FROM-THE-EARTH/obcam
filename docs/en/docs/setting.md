@@ -26,7 +26,7 @@ Path to new video file, defaults `None`.
 
 ### `file_log`
 
-Path to new log file, defualts `None`.
+Path to new log file, defaults `None`.
 
 ### `parent_dir`
 
@@ -63,19 +63,19 @@ Interval of waiting time until the flight pin is disconnected, defaults `0.1`. T
 
 ### `shutdown_after_recording`
 
-If shutting down the system after recording or not.
+If shutting down the system after recording or not, defaults `True`.
 
 ### `interval_watching`
 
-Interval of watching processes in other threads, defualts `0.1`.
+Interval of watching processes in other threads, defaults `0.1`.
 
 ### `threshold_restart`
 
-Time threshold of waiting time to activate the command `restart`, defaults `5.`. The command `restart` is activated if the flight pin is connected again for more than `threshold_restart` seconds during recording."""
+Time threshold of waiting time to activate the command `RESTART`, defaults `5.`. The command `RESTART` is activated if the flight pin is connected again for more than `threshold_restart` seconds during recording.
 
 ### `threshold_exit`
 
-Time threshold of waiting time to activate the command `exit`, defaults `2.`. The command `exit` is activated if the flight pin is connected for less than `threshold_exit` seconds and disconnected again for more than `threshold_exit` seconds during recording."""
+Time threshold of waiting time to activate the command `EXIT`, defaults `2.`. The command `EXIT` is activated if the flight pin is connected for less than `threshold_exit` seconds and disconnected again for more than `threshold_exit` seconds during recording.
 
 ## Examples
 
