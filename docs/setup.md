@@ -20,11 +20,56 @@
 
 ![raspi-imager](./res/raspi-imager.gif)
 
+## Essential system setttings in `raspi-config`
+
+Users can configure some essential settings using `raspi-config`. `raspi-config` can be executed by the command (note that it should be executed as the root user):
+
+```bash
+sudo raspi-config
+```
+
+`raspi-config` enables users to configure settings interactively, showing the interface like below:
+
+![raspi-config](./res/raspi-config.png)
+
+Users of `obcam` should configure:
+
+1. WiFi setting for network connection.
+2. Enabling legacy camera support.
+
+!!!note "Rebooting after configuration."
+    Most configuration in the `raspi-config` requires rebooting. Thus, you should reboot the system before executing the flight camera application.
+
+### WiFi setting
+
+In the `raspi-config` interface,
+
+1. Select *System Options*.
+2. Select *Wireless LAN*.
+3. Select your country (e.g. *JP Japan*).
+4. Enter SSID.
+5. Enter passphrase.
+
+!!!info "Tethering"
+    Tethering by your smart phone is a good choice for WiFi access point and router. If you want to use tethering, you enter its SSID and passphrase while the setting above.
+
+### Enabling legacy camera support
+
+In the `raspi-config` interface,
+
+1. Select *Interface Options*.
+2. Select *Legacy Camera*.
+3. Select *Yes*.
+4. Select *OK*.
+
+!!!info "Legacy camera support"
+    The latest version of Raspberry Pi OS supports new camera interface using `libcamera`, so it deprecates using legacy camera support. But `picamera`, which is a Python module for using Raspberry Pi Camera and used in `obcam`, is implemented using the legacy camera interface. Therefore, you should enable it.
+
 ## Brief setup for the flight camera mode
 
-Using this method, you can install `obcam` and activate the flight camera mode simultaneously. The brief setup gets under way using the script `install.sh` [in the repository](https://github.com/FROM-THE-EARTH/obcam/blob/main/install.sh).
+Using this method, you can install `obcam` and activate the flight camera mode simultaneously. The brief setup gets under way using the script `install.sh` [in the repository](https://github.com/FROM-THE-EARTH/obcam/blob/main/install.sh). If you want to know the steps of activation of the flight camera mode, see the [section](#activate-the-flight-camera-mode)
 
-First you should download the repository using `git clone`:
+First you should download the repository using `git clone` (which requires network connection):
 
 ```bash
 git clone https://github.com/FROM-THE-EARTH/obcam.git
@@ -73,39 +118,18 @@ After the installation, you can use the `obcam` command to start the flight came
 
 ### About the flight camera mode
 
-To activate the flight camera mode, the procedures below is required:
+In the flight camera mode, the application of the flight camera automatically starts when booting a Raspberry Pi. To activate the flight camera mode, the procedures below is required:
 
-1. Install `obcam`.
-2. Enable the Raspberry Pi Camera Board.
-3. Writing a gileum file for the flight camera.
-4. Activate the flight camera mode.
-
-In the flight camera mode, the application of the flight camera automatically starts when booting a Raspberry Pi.
-
-### Enable the Raspberry Pi Camera Board
-
-You can enable the Raspberry Pi Camera Board just executing the script `scripts/activate_camera.sh` as the root user. The `scripts/activate_camera.sh` is [in the repository](https://github.com/FROM-THE-EARTH/obcam/blob/main/scripts/activate_camera.sh).
-
-```bash
-sudo ./scripts/activate_camera.sh
-```
-
-!!!tip "Alternatives of the method"
-    - Execute the command below:
-        ```bash
-        sudo raspi-config noint do_camera 0
-        ```
-    - Setting interactively using raspi-config
-        ```bash
-        sudo raspi-config
-        # [3 Interfacing Options] >> [I1 Legacy Camera] >> [Yes]
-        ```
+1. [Network and camera settings](#essential-system-setttings-in-raspi-config).
+2. [Install `obcam`](#install-only-obcam-module).
+3. [Writing a gileum file for the flight camera](#writing-a-gileum-file).
+4. [Activate the flight camera mode](#just-activate-the-flight-camera-mode).
 
 ### Writing a gileum file
 
 Gileum files are kinds of setting files of the application. You should write a gileum file `glm.py` before activation of the flight camera mode. The gileum file `glm.py` is in the repository, so you can overwrite the file after downloding the repository. Details of the setting parameters are written in [the page](./setting.md). But please note that the settings are already done in the `glm.py` when downloading the repository, so **you doesn't have to change the settings if there are no certain reasons**.
 
-### Activate the flight camera mode
+### Just activate the flight camera mode
 
 Using the script `scripts/activate_flightcam.sh`, you can activate the flight camera mode. The `scripts/activate_flihgtcam.sh` is also [in the repository](https://github.com/FROM-THE-EARTH/obcam/blob/main/scripts/activate_flightcam.sh).
 
