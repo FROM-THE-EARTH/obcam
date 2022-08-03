@@ -118,10 +118,9 @@ class IORecorder:
     def _log_waiting_time(self, interval: float = 1.) -> None:
         time_init = time.time()
         while True:
-            self._lock_in_recording.acquire()
-            if self._in_recording:
-                break
-            self._lock_in_recording.release()
+            with self._lock_in_recording:
+                if self._in_recording:
+                    break
 
             self._logger.debug(
                 "Waiting the flight pin to be disconnected, "
