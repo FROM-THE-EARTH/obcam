@@ -10,14 +10,6 @@ This script installs `obcam` and activates the flight camera mode simultaneously
 sudo ./install.sh
 ```
 
-## `scripts/activate_camera.sh`
-
-This script enables the Raspberry Pi Camera Board.
-
-```bash
-sudo scripts/activate_camera.sh
-```
-
 ## `scripts/activate_flightcam.sh`
 
 This script activates the flight camera mode.
