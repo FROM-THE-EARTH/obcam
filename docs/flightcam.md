@@ -2,6 +2,8 @@
 
 ## Assembly
 
+If you finish activation of the flight camera mode referencing the [page](./setup.md), you can go forward to the next step, assembly of the module. In this section, details of components and their assembly are explained.
+
 ### Board Overview
 
 The figure below is a board of the flight camera module. The module has some features:
@@ -42,13 +44,24 @@ The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pi
 
 ### Operations
 
-0. **Do not connect the flight pin before booting**.
 1. Program starts at booting.
 2. Status LED blinks until the flight pin is connected.
     ![blinking_LED](./res/blinking_LED.gif)
 3. After the flight pin is connected, the status LED is turned off until the flight pin is to be disconnected.
 4. When the flight pin is disconnected, the stauts LED is turned on and recording starts.
-5. When the time elapses to the value of `timeout`, recording stops.
+5. Observing if any commands occur while recording.
+6. When the time elapses to the value of `timeout` or a command is detected, recording stops.
+7. If the setting is configured, the system is automatically shutted down.
+
+### Commands
+
+There are some commands for users to operate state of the program.
+
+| name | condition | description |
+|:---:|:---:|:---|
+| NULL | --- | No commands are activated. |
+| RESTART | Flight pin connection in more than `threshold_restart` seconds. | Program will stop recording and restart from the begging. Parameter `threshold_restart` can be set in `glm.py`, defaults 5 seconds. |
+| EXIT | Flight pin connection in less than `threshold_exit` seconds, and then disconnection in more than `threshold_exit` seconds. | Program will stop recording and exit immediately without shutting down. Parameter `threshold_exit` can be set in `glm.py`, defaults 2 seconds. |
 
 ### Flowchart
 
