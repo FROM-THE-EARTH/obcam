@@ -17,17 +17,18 @@ theme:
     - navigation.sections
     - navigation.top
     - search.highlight
+  language: en
   palette:
     primary: grey
 
 nav:
   - Home: index.md
-  - Setup: setup.md
-  - FlightCamera: flightcam.md
-  - Setting: setting.md
-  - Scripts: scripts.md
-  - Checklist: checklist.md
-  - Trouble Shooting: troubleshooting.md
+  - setup.md
+  - flightcam.md
+  - setting.md
+  - scripts.md
+  - checklist.md
+  - troubleshooting.md
 
 markdown_extensions:
   - admonition
@@ -39,6 +40,13 @@ markdown_extensions:
       clickable_checkbox: true
 
 extra:
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: 日本語
+      link: /ja/
+      lang: ja
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/FROM-THE-EARTH/obcam/

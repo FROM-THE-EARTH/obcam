@@ -49,7 +49,7 @@
 ## In a rocket range
 
 - [ ] Connect a Raspberry Pi which is setup already, flight pin cable, and 9V battery to the board.
-- [ ] Confirm the LED is blinking. If the flight pin is already connected, the LED doesn't blink but is turned off. If the LED is being turned off dispite the flight pin is disconnected, connect a monitor and keyboard to the Raspberry Pi and vie log output from the program. If the camera is not detected, try to enable legacy camera support referencing [the section](./setup.md#enabling-legacy-camera-support) and reconnect camera cable.
+- [ ] Confirm the LED is blinking. If the flight pin is already connected, the LED doesn't blink but is turned off. If the LED is being turned off dispite the flight pin is disconnected, connect a monitor and keyboard to the Raspberry Pi and view log output from the program. If the camera is not detected, try to enable legacy camera support referencing [the section](./setup.md#enabling-legacy-camera-support) and reconnect camera cable.
 - [ ] If the program is executed successfully, put the board in to a plastic bag.
 - [ ] Close up the zipper of the plastic bag using curing tape.
 - [ ] Put the plastic bag in to another platic bag and close up the zipper again.
