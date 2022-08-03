@@ -52,6 +52,8 @@ The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pi
 
 ### Flowchart
 
+Characters in red in the flowchart below are parameters in the application. For more information, see [Setting](./setting.md).
+
 ![flowchart](./res/flowchart.svg)
 
 ## Outputs
