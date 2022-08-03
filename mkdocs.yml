@@ -26,12 +26,16 @@ nav:
   - FlightCamera: flightcam.md
   - Setting: setting.md
   - Scripts: scripts.md
+  - Checklist: checklist.md
 
 markdown_extensions:
   - admonition
   - pymdownx.highlight
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
 
 extra:
   social:
