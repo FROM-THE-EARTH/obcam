@@ -65,7 +65,7 @@ Interval of waiting time until the flight pin is disconnected, defaults `0.1`. T
 
 If shutting down the system after recording or not.
 
-### `interval_watching`1
+### `interval_watching`
 
 Interval of watching processes in other threads, defualts `0.1`.
 

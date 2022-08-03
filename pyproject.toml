@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "obcam"
-version = "0.2.0"
+version = "0.2.1"
 description = "Flight camera module and program for the OB team rocket in NSE 2022."
 authors = ["Yunhyeon Jeong <jjj999to@gmail.com>"]
 

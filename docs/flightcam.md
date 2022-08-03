@@ -2,6 +2,8 @@
 
 ## Assembly
 
+If you finish activation of the flight camera mode referencing the [page](./setup.md), you can go forward to the next step, assembly of the module. In this section, details of components and their assembly are explained.
+
 ### Board Overview
 
 The figure below is a board of the flight camera module. The module has some features:
@@ -42,15 +44,28 @@ The below picture is of a Raspberry Pi Zero. Raspberry Pi Zero has 40 of GPIO pi
 
 ### Operations
 
-0. **Do not connect the flight pin before booting**.
 1. Program starts at booting.
 2. Status LED blinks until the flight pin is connected.
     ![blinking_LED](./res/blinking_LED.gif)
 3. After the flight pin is connected, the status LED is turned off until the flight pin is to be disconnected.
 4. When the flight pin is disconnected, the stauts LED is turned on and recording starts.
-5. When the time elapses to the value of `timeout`, recording stops.
+5. Observing if any commands occur while recording.
+6. When the time elapses to the value of `timeout` or a command is detected, recording stops.
+7. If the setting is configured, the system is automatically shutted down.
+
+### Commands
+
+There are some commands for users to operate state of the program.
+
+| name | condition | description |
+|:---:|:---:|:---|
+| NULL | --- | No commands are activated. |
+| RESTART | Flight pin connection in more than `threshold_restart` seconds. | Program will stop recording and restart from the begging. Parameter `threshold_restart` can be set in `glm.py`, defaults 5 seconds. |
+| EXIT | Flight pin connection in less than `threshold_exit` seconds, and then disconnection in more than `threshold_exit` seconds. | Program will stop recording and exit immediately without shutting down. Parameter `threshold_exit` can be set in `glm.py`, defaults 2 seconds. |
 
 ### Flowchart
+
+Characters in red in the flowchart below are parameters in the application. For more information, see [Setting](./setting.md).
 
 ![flowchart](./res/flowchart.svg)
 
@@ -62,9 +77,13 @@ The flight camera application outputs two kinds of files, one is a movie file an
 
 Movie files are the main outputs of the application. You can specify path to a movie file before activating the flight camera mode, by writing the path to `glm.py`. See [Setting](./setting.md#filemov) for details.
 
+In the default setting, the format of movie files is `.h264`. This format could not be played in your favorite movie player. It is recommended using [VLC media player](https://www.videolan.org/vlc/index.ja.html) for playing the format of movies. However, there can exist block noise when playing `.h264` videos, so it might be ideal that you convert `.h264` format to `.mp4`.
+
 ### Log Files
 
 Log files are useful to analysis state of the application, especially during debug. You can also specify path to a log file before activating the flight camera mode. See [Setting](./setting.md#filelog) for more information.
+
+The log level of the application can be changed in `glm.py`. You can specify `logging.DEBUG` as parameter `log_level` to output verbose log for debugging.
 
 Below is an example of the log output.
 
