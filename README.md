@@ -6,15 +6,15 @@
 
 ## Install
 
+After configuration for network connection and installation of `git` and `pip`, run
+
 ```bash
 python -m pip install git+https://github.com/FROM-THE-EARTH/obcam.git
 ```
 
-**Pre-requirements**
-
-- `pip`
-
 ## Install and Activate the flight camera mode
+
+After configuration for network connection and installation of `git`, run
 
 ```bash
 git clone https://github.com/FROM-THE-EARTH/obcam.git
@@ -25,21 +25,9 @@ cd obcam
 sudo ./install.sh
 ```
 
-**Pre-requirements**
-
-- `git`
-
-**Note**
-
-This operation requires network connection.
-
 ## Scripts
 
 Scripts in the `scripts` directory may be useful if you want some small operations like installing just `obcam`, activate the flight camera mode, or deactivate the flight camera mode. See [the site](https://FROM-THE-EARTH.github.io/obcam/scripts/) for more information.
-
-**`activate_camera.sh`**
-
-This script activates the Raspberry Pi Camera of a module. Note that the Raspberry Pi Camera is not activated right after the first booting.
 
 **`activate_flightcam.sh`**
 
