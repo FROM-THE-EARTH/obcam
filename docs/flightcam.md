@@ -96,3 +96,80 @@ Below is an example of the log output.
 [2022-08-02 04:00:03,034] [INFO] Start recording.
 [2022-08-02 04:03:33,151] [INFO] Stop recording.
 ```
+
+### Extract data from SD cards
+
+Your Windows couldn't recognize data in SD cards used in Raspberry Pi because of difference of formats. Thus, you should do unusual operation to extract the data.
+
+**Use 3rd-party applications**
+
+There are some applications that can read data in ext file systems like Raspberry Pi. You can pick favorite one from the list below:
+
+- [extFS for Windows](https://www.paragon-software.com/business/extfs-for-windows/)
+- [Linux Reader](https://www.diskinternals.com/linux-reader/)
+
+**Transfer via HTTP**
+
+If you have another Raspbery Pi, which is not broken and whose WiFi setting (tethering is recommended) is already done, you can insert the SD card to the Raspberry Pi and transfer data via HTTP communication.
+
+1. Enable network connection of a Raspberry Pi. If network setting is not done yet, configure referencing [the section](./setup.md#wifi-setting).
+2. Confirm IP address of the Raspberry Pi:
+    ```bash
+    ip a
+
+    # Example of output
+    # ...
+    # 2: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    # link/ether ff:ff:ff:ff:ff:ff brd ff:ff:ff:ff:ff:ff
+    # inet 192.168.x.x/24 brd 192.168.x.255 scope global noprefixroute eth0
+    #       ↑ this is the IP address.
+    ```
+3. Change the working directory to directory which has files you want to send.
+    ```bash
+    cd [/path/to/directory]
+    # e.g. cd /
+    ```
+4. Start HTTP server specifying the IP address.
+    ```bash
+    # Change the IP address to one of your environment.
+    sudo python -m http.server -b 192.168.x.x 80
+    ```
+5. Open a browser in your smart phone or PC in the same network as the Raspbery Pi.
+6. Enter the URL:
+    ```
+    # Change the IP address to one of your environment.
+    # Change the file name to one you want to send.
+    http://192.168.x.x/[file_name]
+    ```
+
+**Transfer via SSH**
+
+If you have another Raspbery Pi, which is not broken and whose WiFi setting (tethering is recommended) is already done, you can insert the SD card to the Raspberry Pi and transfer data via SSH communication.
+
+1. Enable network connection of a Raspberry Pi. If network setting is not done yet, configure referencing [the section](./setup.md#wifi-setting).
+2. Enable the SSH server:
+    ```bash
+    sudo raspi-config
+    # 1. Select [Interface Options]
+    # 2. Select [SSH]
+    # 3. Select [Yes]
+    ```
+3. Confirm IP address of the Raspberry Pi:
+    ```bash
+    ip a
+
+    # Example of output
+    # ...
+    # 2: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    # link/ether ff:ff:ff:ff:ff:ff brd ff:ff:ff:ff:ff:ff
+    # inet 192.168.x.x/24 brd 192.168.x.255 scope global noprefixroute eth0
+    #       ↑ this is the IP address.
+    ```
+4. Open a terminal (PowerShell in Windows) in your PC in the same network as the Raspberry Pi, and run the command:
+    ```bash
+    # Change the IP address to one of your environment.
+    # Change paths in remote and local to ones you want to send and received.
+    scp obteam@192.168.x.x:/path/to/file /local/path/to/file
+
+    # Enter passphrase of the Raspberry Pi.
+    ```
