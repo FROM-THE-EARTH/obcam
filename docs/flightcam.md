@@ -77,9 +77,13 @@ The flight camera application outputs two kinds of files, one is a movie file an
 
 Movie files are the main outputs of the application. You can specify path to a movie file before activating the flight camera mode, by writing the path to `glm.py`. See [Setting](./setting.md#filemov) for details.
 
+In the default setting, the format of movie files is `.h264`. This format could not be played in your favorite movie player. It is recommended using [VLC media player](https://www.videolan.org/vlc/index.ja.html) for playing the format of movies. However, there can exist block noise when playing `.h264` videos, so it might be ideal that you convert `.h264` format to `.mp4`.
+
 ### Log Files
 
 Log files are useful to analysis state of the application, especially during debug. You can also specify path to a log file before activating the flight camera mode. See [Setting](./setting.md#filelog) for more information.
+
+The log level of the application can be changed in `glm.py`. You can specify `logging.DEBUG` as parameter `log_level` to output verbose log for debugging.
 
 Below is an example of the log output.
 
