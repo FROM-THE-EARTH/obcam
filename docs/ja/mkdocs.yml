@@ -42,10 +42,10 @@ markdown_extensions:
 extra:
   alternate:
     - name: English
-      link: /
+      link: /obcam/
       lang: en
     - name: 日本語
-      link: /ja/
+      link: /obcam/ja/
       lang: ja
   social:
     - icon: fontawesome/brands/github
