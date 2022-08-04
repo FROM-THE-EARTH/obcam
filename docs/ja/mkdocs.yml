@@ -1,6 +1,7 @@
 site_name: obcam
 site_description: Flight camera module and program for the OB team rocket in NSE 2022.
 site_url: https://FROM-THE-EARTH.github.io/obcam/
+edit_uri: edit/main/docs/ja/docs/
 
 docs_dir: docs
 repo_url: https://github.com/FROM-THE-EARTH/obcam/
