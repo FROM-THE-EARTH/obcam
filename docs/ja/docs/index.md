@@ -29,22 +29,30 @@ sudo ./install.sh
 
 `scripts` ディレクトリ内のスクリプトは `obcam` のインストールやフライトカメラの有効化・無効化などの比較的小さな処理を行う際に便利です。詳細については[こちらのページ](https://FROM-THE-EARTH.github.io/obcam/scripts/)を参照してください。
 
-**`activate_flightcam.sh`**
+**`scripts/install.sh`**
+
+`obcam` のインストールとフライトカメラモードの有効化を同時に行うスクリプトです。
+
+**`scripts/activate_flightcam.sh`**
 
 `obcam` のフライトカメラモードを有効にするスクリプトです。フライトカメラモードでは、`obcam` のプログラムは起動時に自動的に実行されます。
 
-**`deactivate_flightcam.sh`**
+**`scripts/deactivate_flightcam.sh`**
 
 フライトカメラモードを無効化するスクリプトです。
 
-**`install_obcam.sh`**
+**`scripts/extend_swap.sh`**
+
+swap ファイルの容量を変更するスクリプトです。デフォルトでは 100MB から 2048 MB に変更します。
+
+**`scripts/install_obcam.sh`**
 
 `pip` を使って `obcam` をインストールするスクリプトです。スクリプト実行前に `pip` がインストールされている必要があります。
 
-**`install_pip.sh`**
+**`scripts/install_pip.sh`**
 
 `pip` をインストールするスクリプトです。`pip` は最初の起動時にはインストールされていない可能性があるため、このスクリプトを使用して `pip` をインストールすることが出来ます。
 
-**`uninstall_obcam.sh`**
+**`scripts/uninstall_obcam.sh`**
 
 `pip` を使用して `obcam` をアンインストールするスクリプトです。
