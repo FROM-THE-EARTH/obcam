@@ -26,6 +26,21 @@ sudo scripts/activate_flightcam.sh
 sudo scripts/deactivate_flightcam.sh
 ```
 
+## `scripts/extend_swap.sh`
+
+swap ファイルの容量を変更するスクリプトです。デフォルトでは 100MB から 2048 MB に変更します。
+
+```bash
+sudo scripts/expand_swap.sh
+```
+
+環境変数 `SWAPSIZE` を指定して実行することで、任意のサイズに変更できます：
+
+```bash
+# 1024 MB に変更
+sudo SWAPSIZE=1024 scripts/expand_swap.sh
+```
+
 ## `scripts/install_obcam.sh`
 
 `pip` で `obcam` モジュールをインストールするスクリプトです。このスクリプトはフライトカメラモードの有効化を行いません。このスクリプトの実行にはネットワーク環境が必要です。
