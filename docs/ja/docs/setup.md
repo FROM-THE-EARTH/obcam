@@ -131,7 +131,7 @@ gileum ファイルはこのアプリケーションの設定ファイルのよ�
 
 ### フライトカメラモードのみの有効化
 
-`scripts/activate_flightcam.sh` というスクリプトを使用すれば、フライトカメラモードのみを有効化できます。`scripts/activate_flihgtcam.sh` は[リポジトリ上]((https://github.com/FROM-THE-EARTH/obcam/blob/main/scripts/activate_flightcam.sh)に置いてあります。
+`scripts/activate_flightcam.sh` というスクリプトを使用すれば、フライトカメラモードのみを有効化できます。`scripts/activate_flihgtcam.sh` は[リポジトリ上](https://github.com/FROM-THE-EARTH/obcam/blob/main/scripts/activate_flightcam.sh)に置いてあります。
 
 ```bash
 sudo ./scripts/activate_flightcam.sh
