@@ -472,15 +472,19 @@ sudo ./install.sh
 </code></pre></div>
 <h2 id="_3">スクリプト</h2>
 <p><code>scripts</code> ディレクトリ内のスクリプトは <code>obcam</code> のインストールやフライトカメラの有効化・無効化などの比較的小さな処理を行う際に便利です。詳細については<a href="https://FROM-THE-EARTH.github.io/obcam/scripts/">こちらのページ</a>を参照してください。</p>
-<p><strong><code>activate_flightcam.sh</code></strong></p>
+<p><strong><code>scripts/install.sh</code></strong></p>
+<p><code>obcam</code> のインストールとフライトカメラモードの有効化を同時に行うスクリプトです。</p>
+<p><strong><code>scripts/activate_flightcam.sh</code></strong></p>
 <p><code>obcam</code> のフライトカメラモードを有効にするスクリプトです。フライトカメラモードでは、<code>obcam</code> のプログラムは起動時に自動的に実行されます。</p>
-<p><strong><code>deactivate_flightcam.sh</code></strong></p>
+<p><strong><code>scripts/deactivate_flightcam.sh</code></strong></p>
 <p>フライトカメラモードを無効化するスクリプトです。</p>
-<p><strong><code>install_obcam.sh</code></strong></p>
+<p><strong><code>scripts/extend_swap.sh</code></strong></p>
+<p>swap ファイルの容量を変更するスクリプトです。デフォルトでは 100MB から 2048 MB に変更します。</p>
+<p><strong><code>scripts/install_obcam.sh</code></strong></p>
 <p><code>pip</code> を使って <code>obcam</code> をインストールするスクリプトです。スクリプト実行前に <code>pip</code> がインストールされている必要があります。</p>
-<p><strong><code>install_pip.sh</code></strong></p>
+<p><strong><code>scripts/install_pip.sh</code></strong></p>
 <p><code>pip</code> をインストールするスクリプトです。<code>pip</code> は最初の起動時にはインストールされていない可能性があるため、このスクリプトを使用して <code>pip</code> をインストールすることが出来ます。</p>
-<p><strong><code>uninstall_obcam.sh</code></strong></p>
+<p><strong><code>scripts/uninstall_obcam.sh</code></strong></p>
 <p><code>pip</code> を使用して <code>obcam</code> をアンインストールするスクリプトです。</p>
 
               

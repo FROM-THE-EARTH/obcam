@@ -352,6 +352,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#scriptsextend_swapsh" class="md-nav__link">
+    scripts/extend_swap.sh
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scriptsinstall_obcamsh" class="md-nav__link">
     scripts/install_obcam.sh
   </a>
@@ -458,6 +465,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#scriptsextend_swapsh" class="md-nav__link">
+    scripts/extend_swap.sh
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scriptsinstall_obcamsh" class="md-nav__link">
     scripts/install_obcam.sh
   </a>
@@ -509,6 +523,14 @@
 <h2 id="scriptsdeactivate_flightcamsh"><code>scripts/deactivate_flightcam.sh</code></h2>
 <p>フライトカメラモードの無効化を行うスクリプトです。</p>
 <div class="highlight"><pre><span></span><code>sudo scripts/deactivate_flightcam.sh
+</code></pre></div>
+<h2 id="scriptsextend_swapsh"><code>scripts/extend_swap.sh</code></h2>
+<p>swap ファイルの容量を変更するスクリプトです。デフォルトでは 100MB から 2048 MB に変更します。</p>
+<div class="highlight"><pre><span></span><code>sudo scripts/expand_swap.sh
+</code></pre></div>
+<p>環境変数 <code>SWAPSIZE</code> を指定して実行することで、任意のサイズに変更できます：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1024 MB に変更</span>
+sudo <span class="nv">SWAPSIZE</span><span class="o">=</span><span class="m">1024</span> scripts/expand_swap.sh
 </code></pre></div>
 <h2 id="scriptsinstall_obcamsh"><code>scripts/install_obcam.sh</code></h2>
 <p><code>pip</code> で <code>obcam</code> モジュールをインストールするスクリプトです。このスクリプトはフライトカメラモードの有効化を行いません。このスクリプトの実行にはネットワーク環境が必要です。</p>

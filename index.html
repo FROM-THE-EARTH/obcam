@@ -472,15 +472,19 @@ sudo ./install.sh
 </code></pre></div>
 <h2 id="scripts">Scripts</h2>
 <p>Scripts in the <code>scripts</code> directory may be useful if you want some small operations like installing just <code>obcam</code>, activate the flight camera mode, or deactivate the flight camera mode. See <a href="https://FROM-THE-EARTH.github.io/obcam/scripts/">the site</a> for more information.</p>
-<p><strong><code>activate_flightcam.sh</code></strong></p>
+<p><strong><code>install.sh</code></strong></p>
+<p>This script installs <code>obcam</code> and activates the flight camera mode simultaneously.</p>
+<p><strong><code>scripts/activate_flightcam.sh</code></strong></p>
 <p>This script activates the flight camera mode of the <code>obcam</code>. In the flight camera mode, the program of the <code>obcam</code> run automatically when booting.</p>
-<p><strong><code>deactivate_flightcam.sh</code></strong></p>
+<p><strong><code>scripts/deactivate_flightcam.sh</code></strong></p>
 <p>This script deactivates the flight camera mode.</p>
-<p><strong><code>install_obcam.sh</code></strong></p>
+<p><strong><code>scripts/expand_swap.sh</code></strong></p>
+<p>This script expands size of the swap file <code>/var/swap</code>. In the default setting, size of the swap will be changed to 2048 MB.</p>
+<p><strong><code>scripts/install_obcam.sh</code></strong></p>
 <p>This script installs the <code>obcam</code> module using <code>pip</code>. Note that <code>pip</code> should be installed before executing this script.</p>
-<p><strong><code>install_pip.sh</code></strong></p>
+<p><strong><code>scripts/install_pip.sh</code></strong></p>
 <p>This script installs <code>pip</code>. Note that <code>pip</code> could be not installed yet right after the first booting. Thus, this script might be useful in the situation.</p>
-<p><strong><code>uninstall_obcam.sh</code></strong></p>
+<p><strong><code>scripts/uninstall_obcam.sh</code></strong></p>
 <p>This script uninstalls the <code>obcam</code> module using <code>pip</code>.</p>
 
               
