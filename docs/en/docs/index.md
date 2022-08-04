@@ -29,22 +29,30 @@ sudo ./install.sh
 
 Scripts in the `scripts` directory may be useful if you want some small operations like installing just `obcam`, activate the flight camera mode, or deactivate the flight camera mode. See [the site](https://FROM-THE-EARTH.github.io/obcam/scripts/) for more information.
 
-**`activate_flightcam.sh`**
+**`install.sh`**
+
+This script installs `obcam` and activates the flight camera mode simultaneously.
+
+**`scripts/activate_flightcam.sh`**
 
 This script activates the flight camera mode of the `obcam`. In the flight camera mode, the program of the `obcam` run automatically when booting.
 
-**`deactivate_flightcam.sh`**
+**`scripts/deactivate_flightcam.sh`**
 
 This script deactivates the flight camera mode.
 
-**`install_obcam.sh`**
+**`scripts/expand_swap.sh`**
+
+This script expands size of the swap file `/var/swap`. In the default setting, size of the swap will be changed to 2048 MB.
+
+**`scripts/install_obcam.sh`**
 
 This script installs the `obcam` module using `pip`. Note that `pip` should be installed before executing this script.
 
-**`install_pip.sh`**
+**`scripts/install_pip.sh`**
 
 This script installs `pip`. Note that `pip` could be not installed yet right after the first booting. Thus, this script might be useful in the situation.
 
-**`uninstall_obcam.sh`**
+**`scripts/uninstall_obcam.sh`**
 
 This script uninstalls the `obcam` module using `pip`.

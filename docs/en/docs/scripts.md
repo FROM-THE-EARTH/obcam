@@ -26,6 +26,21 @@ This script deactivates the flight camera mode.
 sudo scripts/deactivate_flightcam.sh
 ```
 
+**`scripts/expand_swap.sh`**
+
+This script expands size of the swap file `/var/swap`. In the default setting, size of the swap will be changed to 2048 MB.
+
+```bash
+sudo scripts/expand_swap.sh
+```
+
+You can change the swap size specifying value of the environment variable `SWAPSIZE`:
+
+```bash
+# Change to 1024 MB.
+sudo SWAPSIZE=1024 scripts/expand_swap.sh
+```
+
 ## `scripts/install_obcam.sh`
 
 This script just installs `obcam` using `pip`, but doesn't activate the flight camera mode. This script requires network connection.
