@@ -375,6 +375,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#update-obcam" class="md-nav__link">
+    Update obcam
+  </a>
+  
+    <nav class="md-nav" aria-label="Update obcam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-just-obcam" class="md-nav__link">
+    Update just obcam
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-obcam-and-activate-the-flight-camera-mode" class="md-nav__link">
+    Update obcam and activate the flight camera mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#details-of-the-activation" class="md-nav__link">
     Details of the activation
   </a>
@@ -580,6 +607,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#update-obcam" class="md-nav__link">
+    Update obcam
+  </a>
+  
+    <nav class="md-nav" aria-label="Update obcam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-just-obcam" class="md-nav__link">
+    Update just obcam
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-obcam-and-activate-the-flight-camera-mode" class="md-nav__link">
+    Update obcam and activate the flight camera mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#details-of-the-activation" class="md-nav__link">
     Details of the activation
   </a>
@@ -711,6 +765,18 @@ sudo apt install git
 <p>Using the script <code>scripts/activate_flightcam.sh</code>, you can activate the flight camera mode. The <code>scripts/activate_flihgtcam.sh</code> is also <a href="https://github.com/FROM-THE-EARTH/obcam/blob/main/scripts/activate_flightcam.sh">in the repository</a>.</p>
 <div class="highlight"><pre><span></span><code>sudo ./scripts/activate_flightcam.sh
 </code></pre></div>
+<h2 id="update-obcam">Update <code>obcam</code></h2>
+<h3 id="update-just-obcam">Update just <code>obcam</code></h3>
+<p>You can update <code>obcam</code> following commnd:</p>
+<div class="highlight"><pre><span></span><code>pip install --upgrade git+https://github.com/FROM-THE-EARTH/obcam.git
+</code></pre></div>
+<h3 id="update-obcam-and-activate-the-flight-camera-mode">Update <code>obcam</code> and activate the flight camera mode</h3>
+<ol>
+<li>Delete the local repository:
+    <div class="highlight"><pre><span></span><code>rm -rf obcam/
+</code></pre></div></li>
+<li>Follow the operations referencing <a href="#brief-setup-for-the-flight-camera-mode">the section</a></li>
+</ol>
 <h2 id="details-of-the-activation">Details of the activation</h2>
 <p>In this section, details of the activate process is described. The process is not complicated so much. The point is to update the <code>/etc/rc.local</code> file in the system. The file <code>/etc/rc.local</code> is a shell script to be executed at booting.</p>
 <p>The script <code>scripts/activate_flightcam.sh</code> inserts the line to <code>/etc/rc.local</code>, in order to execute the <code>obcam</code> program like that:</p>

@@ -375,6 +375,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#obcam_1" class="md-nav__link">
+    obcam のアップデート
+  </a>
+  
+    <nav class="md-nav" aria-label="obcam のアップデート">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obcam_2" class="md-nav__link">
+    obcam のみのアップデート
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obcam_3" class="md-nav__link">
+    obcam のアップデートおよびフライトカメラモードの有効化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_7" class="md-nav__link">
     フライトカメラモードの有効化の詳細
   </a>
@@ -580,6 +607,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#obcam_1" class="md-nav__link">
+    obcam のアップデート
+  </a>
+  
+    <nav class="md-nav" aria-label="obcam のアップデート">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obcam_2" class="md-nav__link">
+    obcam のみのアップデート
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#obcam_3" class="md-nav__link">
+    obcam のアップデートおよびフライトカメラモードの有効化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_7" class="md-nav__link">
     フライトカメラモードの有効化の詳細
   </a>
@@ -711,6 +765,18 @@ sudo apt install git
 <p><code>scripts/activate_flightcam.sh</code> というスクリプトを使用すれば、フライトカメラモードのみを有効化できます。<code>scripts/activate_flihgtcam.sh</code> は<a href="https://github.com/FROM-THE-EARTH/obcam/blob/main/scripts/activate_flightcam.sh">リポジトリ上</a>に置いてあります。</p>
 <div class="highlight"><pre><span></span><code>sudo ./scripts/activate_flightcam.sh
 </code></pre></div>
+<h2 id="obcam_1"><code>obcam</code> のアップデート</h2>
+<h3 id="obcam_2"><code>obcam</code> のみのアップデート</h3>
+<p>以下のコマンドで <code>pip</code> を使用してアップデートできます：</p>
+<div class="highlight"><pre><span></span><code>pip install --upgrade git+https://github.com/FROM-THE-EARTH/obcam.git
+</code></pre></div>
+<h3 id="obcam_3"><code>obcam</code> のアップデートおよびフライトカメラモードの有効化</h3>
+<ol>
+<li>ローカルリポジトリの削除：
+    <div class="highlight"><pre><span></span><code>rm -rf obcam/
+</code></pre></div></li>
+<li><a href="#_3">こちらのセクション</a>にしたがって再度フライトカメラモードを有効化</li>
+</ol>
 <h2 id="_7">フライトカメラモードの有効化の詳細</h2>
 <p>ここではフライトカメラモードの有効化のプロセスについて説明します。そのプロセス自体はそこまで複雑ではありません。ポイントは <code>/etc/rc.local</code> を設定するという点です。 <code>/etc/rc.local</code> はシェルスクリプトであり、OS の起動時に自動実行されるスクリプトです。</p>
 <p><code>scripts/activate_flightcam.sh</code> というスクリプトは <code>/etc/rc.local</code> に <code>obcam</code> プログラムを実行される以下の一行を挿入します:</p>
