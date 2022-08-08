@@ -180,6 +180,41 @@ class IORecorder:
 
             time.sleep(interval)
 
+    def _wait_until_flightpin_connected(self) -> None:
+        if not self.in_flight:
+            return
+
+        while True:
+            gpio.wait_for_edge(self._pin_flight, gpio.FALLING)
+
+            self._logger.debug(
+                "Disconnection of the flight pin was detected. "
+                f"Waiting {GRACE_PERIOD_FOR_CHATTERING} seconds to verify "
+                "the flight pin was pulled out exactly."
+            )
+            time_init = time.time()
+            is_flightpin_connected = False
+            while True:
+                if self.in_flight:
+                    self._logger.debug(
+                        "Level of the flight pin is high. It means that "
+                        "the flight pin is disconnected before time of "
+                        "waiting threshold elapsed. Thus, detecting "
+                        "the flight pin is to be continued."
+                    )
+                    break
+
+                if time.time() - time_init > GRACE_PERIOD_FOR_CHATTERING:
+                    is_flightpin_connected = True
+                    self._logger.debug(
+                        "Time of waiting threshold elapsed while level of "
+                        "the flight pin is stable."
+                    )
+                    break
+
+            if is_flightpin_connected:
+                break
+
     def record(
         self,
         timeout: float,
@@ -245,38 +280,7 @@ class IORecorder:
         self._logger.info("Waiting a flight pin to be connected...")
         self.blink_led()
 
-        while True:
-            if self.in_flight:
-                continue
-
-            self._logger.debug(
-                "Disconnection of the flight pin was detected. "
-                f"Waiting {GRACE_PERIOD_FOR_CHATTERING} seconds to verify "
-                "the flight pin was pulled out exactly."
-            )
-            time_init = time.time()
-            is_flightpin_connected = False
-            while True:
-                if self.in_flight:
-                    self._logger.debug(
-                        "Level of the flight pin is high. It means that "
-                        "the flight pin is disconnected before time of "
-                        "waiting threshold elapsed. Thus, detecting "
-                        "the flight pin is to be continued."
-                    )
-                    break
-
-                if time.time() - time_init > GRACE_PERIOD_FOR_CHATTERING:
-                    is_flightpin_connected = True
-                    self._logger.debug(
-                        "Time of waiting threshold elapsed while level of "
-                        "the flight pin is stable."
-                    )
-                    break
-
-            if is_flightpin_connected:
-                break
-
+        self._wait_until_flightpin_connected()
         self.turn_off_led()
         self._logger.info("Detected that the flight pin was connected.")
 
