@@ -137,6 +137,24 @@ Using the script `scripts/activate_flightcam.sh`, you can activate the flight ca
 sudo ./scripts/activate_flightcam.sh
 ```
 
+## Update `obcam`
+
+### Update just `obcam`
+
+You can update `obcam` following commnd:
+
+```bash
+pip install --upgrade git+https://github.com/FROM-THE-EARTH/obcam.git
+```
+
+### Update `obcam` and activate the flight camera mode
+
+1. Delete the local repository:
+    ```bash
+    rm -rf obcam/
+    ```
+2. Follow the operations referencing [the section](#brief-setup-for-the-flight-camera-mode)
+
 ## Details of the activation
 
 In this section, details of the activate process is described. The process is not complicated so much. The point is to update the `/etc/rc.local` file in the system. The file `/etc/rc.local` is a shell script to be executed at booting.
