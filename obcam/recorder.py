@@ -93,8 +93,12 @@ class IORecorder:
         self._pwm_led.start(0)
 
     def __del__(self) -> None:
-        self._camera.stop_recording()
-        self._pwm_led.stop()
+        try:
+            self._camera.stop_recording()
+            self._pwm_led.stop()
+        except AttributeError:
+            pass
+
         gpio.cleanup()
         self._logger.debug("Cleaned up the all GPIO pins.")
 
