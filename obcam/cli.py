@@ -43,15 +43,16 @@ def run_flight_camera(glm: OBCamGileum) -> None:
         f"Setting; {', '.join([f'{k}: {v}' for k, v in glm.dict().items()])}"
     )
 
-    recorder = IORecorder(
-        glm.pin_flight,
-        glm.pin_led,
-        logger,
-        resolution=glm.resolution,
-        framerate=glm.framerate,
-        led_blink_freq=glm.led_blink_freq,
-    )
     try:
+        recorder = IORecorder(
+            glm.pin_flight,
+            glm.pin_led,
+            logger,
+            resolution=glm.resolution,
+            framerate=glm.framerate,
+            led_blink_freq=glm.led_blink_freq,
+        )
+
         while True:
             # Setup file paths.
             if glm.file_mov is None:
