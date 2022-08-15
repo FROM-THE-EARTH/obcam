@@ -67,10 +67,21 @@ class IORecorder:
             led_blink_freq: Frequency of LED blinking.
         """
         self._logger = logger
-        self._camera = picamera.PiCamera(
-            resolution=resolution,
-            framerate=framerate,
-        )
+        try:
+            self._camera = picamera.PiCamera(
+                resolution=resolution,
+                framerate=framerate,
+            )
+        except picamera.PiCameraMMALError as e:
+            self._logger.exception(
+                "Failed to enable camera connection. Please confirm "
+                "camera connection or camera setting, referencing "
+                "https://from-the-earth.github.io/obcam/troubleshooting/"
+                "#when-camera-is-not-detected .",
+                exc_info=e,
+            )
+            raise e
+
         self._first_recording = True
 
         self._pin_flight = pin_flight
@@ -98,9 +109,9 @@ class IORecorder:
             self._pwm_led.stop()
         except AttributeError:
             pass
-
-        gpio.cleanup()
-        self._logger.debug("Cleaned up the all GPIO pins.")
+        else:
+            gpio.cleanup()
+            self._logger.debug("Cleaned up the all GPIO pins.")
 
     @property
     def in_flight(self) -> bool:
